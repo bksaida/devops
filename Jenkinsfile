@@ -10,8 +10,8 @@ pipeline {
         
         stage('Npm Install') {
             steps {
-           //     nodejs('nodejs') {
-                    npm 'install'
+           //     nodejs('nodejs14') {
+                   sh 'npm install'
           //      }
             }
         }
