@@ -23,7 +23,7 @@ pipeline {
         }
         stage('docker build'){
             steps{
-                sh 'docker build -t documentcode:1.0.0 --target=deploy'
+                sh 'docker build -t documentcode:1.0.0 --target=deploy .'
             }
         }
  
