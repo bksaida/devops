@@ -6,14 +6,10 @@ pipeline {
 
     }
 
-    stages {
-        
+    stages {    
         stage('Npm Install') {
             steps {
-                sh 'ls'
                   sh 'npm install'
-                
-
             }
         }
         
@@ -25,7 +21,12 @@ pipeline {
                 
             }
         }
+        stage('docker build'){
+            steps{
+                sh 'docker build -t documentcode:1.0.0 --target=deploy'
+            }
+        }
  
-
+// --target=deploy
     }
 }
