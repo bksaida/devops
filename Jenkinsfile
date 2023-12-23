@@ -2,7 +2,7 @@ pipeline {
     agent any
     tools {
       nodejs 'nodejs'
-    //   dockerTool 'docker'
+      dockerTool 'docker'
 
     }
 
@@ -10,18 +10,19 @@ pipeline {
         
         stage('Npm Install') {
             steps {
-                nodejs('nodejs') {
-                   npm 'install'
-                }
+                sh 'ls'
+                  sh 'npm install'
+                
 
             }
         }
         
         stage('npm run build') {
             steps {
-                nodejs('nodejs') {
-                    npm 'run build'
-                }
+                 sh '''
+                 npm run build
+                 '''
+                
             }
         }
  
