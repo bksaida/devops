@@ -1,0 +1,48 @@
+ # docker-compose.yaml
+version: '3.0'
+volumes:
+  jenkins_home: {}
+  SonarQube_data: {}
+  SonarQube_extensions: {}
+  SonarQube_logs: {}
+  nexus-data: {}
+services:
+    jenkins:
+      image: jenkins/jenkins:lts-jdk17
+      privileged: true
+      user: root
+      ports:
+        - 8080:8080
+        - 50000:50000
+      container_name: jenkins
+      volumes:
+        - jenkins_home:/var/jenkins_home
+        - //var/run/docker.sock:/var/run/docker.sock
+        - /usr/local/bin/docker:/usr/local/bin/docker
+      networks:
+        - my_network
+    SonarQube:
+        image: sonarqube:latest
+        volumes:
+          - SonarQube_data:/opt/SonarQube/data
+          - SonarQube_extensions:/opt/SonarQube/extensions
+          - SonarQube_logs:/opt/SonarQube/logs
+        ports:
+          - "9000:9000"
+        container_name: sonarqube
+        networks:
+          - my_network
+    nexus:
+        image: sonatype/nexus3:latest
+        container_name: nexus
+        ports:
+          - "8081:8081"
+          - "8085:8085" 
+        volumes:
+          - nexus-data:/nexus-data
+        networks:
+          - my_network
+networks:
+  my_network:
+   driver: bridge
+       
