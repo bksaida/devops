@@ -50,7 +50,7 @@ pipeline {
                 agent {
                     docker {
                         image 'sonarsource/sonar-scanner-cli'
-                        args "-v /var/run/docker.sock:/var/run/docker.sock --network devops"
+                        args "-v /var/run/docker.sock:/var/run/docker.sock --network rdenewdocumentation-main_my_network"
                     }
                 }
                 steps {
