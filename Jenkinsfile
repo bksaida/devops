@@ -21,7 +21,7 @@ pipeline {
                 script {
                     // Define the expected format for the imageTag (year.month.hotfix)
                     def regexPattern = /^[0-9]{4}\.[0-9]{1,2}\.[0-9]+$/
-
+                    // image tag : 2023.1.9 
                     // Check if the imageTag matches the expected format
                     if (!(params.imageTag =~ regexPattern)) {
                         error "Invalid imageTag format. Please use the format: year.month.hotfix"
