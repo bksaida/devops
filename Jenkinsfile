@@ -52,8 +52,7 @@ pipeline {
             steps {
                 script {
                     // Your Nexus credentials ID
-                    def nexusCredentialsId = 'nexus'
-
+                    def nexusCredentialsId = 'nexuspwd'
                     // Docker registry URL
                     def registryUrl = 'localhost:8085'
 
