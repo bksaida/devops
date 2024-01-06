@@ -29,7 +29,7 @@ pipeline {
                 }
             }
         }
-
+/* 
         stage('Npm Install') {
             steps {
                 sh 'npm install'
@@ -40,8 +40,35 @@ pipeline {
             steps {
                 sh 'npm run build'
             }
+        } */
+        stage('SonarQube Analysis') {
+                environment {
+                    SONAR_PROJECT_KEY = 'SonarProject'
+                    SONAR_SOURCES_DIR = './src'
+                    SONAR_HOST_URL = 'http://sonarqube:9000'
+                }
+                agent {
+                    docker {
+                        image 'sonarsource/sonar-scanner-cli'
+                        args "-v /var/run/docker.sock:/var/run/docker.sock --network devops"
+                    }
+                }
+                steps {
+                    withCredentials([string(credentialsId: 'sonarqubetoken', variable: 'SONAR_TOKEN')]) {
+                        script {
+                            sh """
+                            sonar-scanner \\
+                                -Dsonar.projectKey=${SONAR_PROJECT_KEY} \\
+                                -Dsonar.sources=${SONAR_SOURCES_DIR} \\
+                                -Dsonar.host.url=${SONAR_HOST_URL} \\
+                                -Dsonar.token=${SONAR_TOKEN}
+                            """
+                        }
+                    }
+                }
+                
         }
-
+                        
         stage('docker build') {
             steps {
                 sh "docker build -t ${fullImageName} --target=deploy ."
@@ -64,13 +91,14 @@ pipeline {
             }
         }
 
-        stage('Docker Build and Push') {
+        stage('Docker Push') {
             steps {
                 script {
                     // Docker push
                     sh "docker push ${fullImageName}"
                 }
             }
+
         }
     }
 }
