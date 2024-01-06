@@ -1,7 +1,7 @@
 pipeline {
     parameters {
         string(name: 'imageName', defaultValue: 'documentation', description: 'Name of the Docker image')
-        string(name: 'imageTag', defaultValue: '1.9', description: 'Tag for the Docker image (format: year.month.hotfix)')
+        string(name: 'imageTag', defaultValue: '2013.1.9', description: 'Tag for the Docker image (format: year.month.hotfix)')
     }
 
     agent any
@@ -54,7 +54,7 @@ pipeline {
                     // Your Nexus credentials ID
                     def nexusCredentialsId = 'nexuspwd'
                     // Docker registry URL
-                    def registryUrl = 'localhost:8085'
+                    def registryUrl = 'localhost:8087'
 
                     // Docker login
                     withCredentials([usernamePassword(credentialsId: nexusCredentialsId, usernameVariable: 'NEXUS_USERNAME', passwordVariable: 'NEXUS_PASSWORD')]) {
