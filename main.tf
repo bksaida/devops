@@ -15,4 +15,29 @@ provider "aws" {
 
 
 
+# Define input variables
+variable "instance_size" {
+  description = "The size of the instance (e.g., t2.micro)"
+  type        = string
+  default     = "t2.micro" # size
+}
 
+variable "virtual_network_cidr" {
+  description = "The CIDR block for the virtual network"
+  type        = string
+  default     = "10.0.0.0/16" # Default CIDR block for virtual network
+}
+
+
+module "example_instance" {
+  source  = "./example-module"
+  # Other module configuration settings
+}
+
+output "instance_public_ip" {
+  value = module.example_instance.public_ip_address
+}
+
+output "instance_connection_details" {
+  value = module.example_instance.connection_details
+}
